@@ -7,6 +7,7 @@ from typing import AsyncIterator
 from opensearchpy import AsyncOpenSearch
 from wazuh.core.exception import WazuhIndexerError
 from wazuh.core.indexer.agent import AgentsIndex
+from wazuh.core.indexer.bulk import MixinBulk
 from wazuh.core.indexer.commands import CommandsManager
 from wazuh.core.config.client import CentralizedConfig
 
@@ -16,7 +17,7 @@ HOST_KEY = 'host'
 PORT_KEY = 'port'
 
 
-class Indexer:
+class Indexer(MixinBulk):
     """Interface to connect with Wazuh Indexer."""
 
     def __init__(
