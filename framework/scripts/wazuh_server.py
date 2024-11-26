@@ -194,6 +194,7 @@ async def master_main(args: argparse.Namespace, server_config: ServerConfig, log
     from wazuh.core.cluster import local_server, master
 
     cluster_utils.context_tag.set('Master')
+    start_unix_server()
 
     my_server = master.Master(
         performance_test=args.performance_test,
@@ -241,6 +242,7 @@ async def worker_main(args: argparse.Namespace, server_config: ServerConfig, log
     from wazuh.core.cluster import local_server, worker
 
     cluster_utils.context_tag.set('Worker')
+    start_unix_server()
 
     # Pool is defined here so the child process is not recreated when the connection with master node is broken.
     try:
@@ -383,7 +385,6 @@ def main():
         main_function = worker_main
 
     try:
-        start_unix_server()
         start_daemons(args.foreground, args.root)
 
         asyncio.run(main_function(args, server_config, main_logger))
